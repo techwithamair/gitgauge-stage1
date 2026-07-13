@@ -1,4 +1,3 @@
-# 🎯 GitGauge
 
 **GitHub Profile Auditor & Beginner Issue Finder**
 
@@ -58,16 +57,19 @@ It fetches your public repos from the GitHub API, scores your profile out of 100
 ---
 
 ## 🏗 Architecture
-┌──────────────┐     ┌────────────────┐     ┌────────────────┐
-│  GitHub API   │───▶│  get_repos()     │───▶│  score_profile()  │
-│  (repos/search)│     │                    │     │  + punch_list()    │
-└──────────────┘     └────────────────┘     └────────────────┘
-│
-▼
-┌──────────────┐     ┌────────────────┐     ┌────────────────┐
-│  cache.json    │◀───│  find_issues()    │◀───│  approachability()│
-│  (local store)  │     │                     │     │  + my_sort()         │
-└──────────────┘     └────────────────┘     └────────────────┘
+
+```mermaid
+flowchart TD
+    A[GitHub API] --> B[get_repos]
+    B --> C[score_profile]
+    C --> D[punch_list]
+
+    A --> E[find_issues]
+    E --> F[approachability + my_sort]
+
+    B --> G[(cache.json)]
+    E --> G
+```
 
 ---
 
@@ -88,7 +90,7 @@ It fetches your public repos from the GitHub API, scores your profile out of 100
 ### Installation
 
 ```bash
-git clone https://github.com/<your-username>/gitgauge.git
+git clone https://github.com//gitgauge.git
 cd gitgauge
 ```
 
