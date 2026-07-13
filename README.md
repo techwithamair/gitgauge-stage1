@@ -2,7 +2,7 @@
 
 **GitHub Profile Auditor & Beginner Issue Finder**
 
-GitGauge is a command-line tool that audits a GitHub profile, scores it against recruiter-relevant criteria, and helps you find beginner-friendly open-source issues to work on. It's built entirely with Python's standard library — no `requests`, no third-party libraries — as a deliberate exercise in understanding what those libraries usually abstract away.
+GitGauge is a command-line tool that audits a GitHub profile, scores it against recruiter-relevant criteria, and helps you find beginner-friendly open-source issues to work on.
 
 > **"Audit. Improve. Contribute."**
 
@@ -17,7 +17,6 @@ GitGauge is a command-line tool that audits a GitHub profile, scores it against 
 - [Tech Stack](#️-tech-stack)
 - [Getting Started](#-getting-started)
 - [Usage](#-usage)
-- [Notes](#️-notes)
 - [What's Next](#-whats-next)
 
 ---
@@ -27,9 +26,9 @@ GitGauge is a command-line tool that audits a GitHub profile, scores it against 
 GitGauge answers two questions for a developer working on their portfolio:
 
 1. **How does my GitHub profile look to a recruiter?**
-2. **What should I fix next, and what should I work on to improve it?**
+2. **What should I fix, and what should I work on next?**
 
-It fetches your public repos from the GitHub API, scores your profile out of 100, tells you the top 3 things to fix, and can search for open "good first issue" tickets in a language you choose — ranked by how approachable they look.
+It fetches your public repos from the GitHub API, scores your profile out of 100, tells you the top 3 things to fix, and searches for open "good first issue" tickets in a language you choose — ranked by how approachable they look.
 
 ---
 
@@ -41,8 +40,8 @@ It fetches your public repos from the GitHub API, scores your profile out of 100
 | 🧾 Breakdown | Shows exactly where points were earned or lost |
 | ✅ Punch List | Prints the top 3 highest-impact fixes, in plain language |
 | 🔍 Issue Finder | Searches GitHub for open "good first issue" tickets by language |
-| 🧮 Approachability Ranking | Hand-written sort ranks issues by comment count and age |
-| 💾 Local Caching | Caches profile lookups to avoid burning API rate limits |
+| 🧮 Approachability Ranking | Ranks issues by comment count and age |
+| 💾 Local Caching | Caches profile lookups to avoid repeat API calls |
 | 🖥️ CLI Menu | Simple interactive menu — audit a profile or find issues |
 
 ---
@@ -53,29 +52,29 @@ It fetches your public repos from the GitHub API, scores your profile out of 100
 2. **Score** — evaluates bio presence, repo descriptions, recent activity, stars, and original vs. forked repos
 3. **Advise** — ranks your weakest areas and prints the top 3 fixes
 4. **Search** — finds open, beginner-labeled issues in a language you pick
-5. **Rank** — scores each issue's approachability (comments + age) and sorts them by hand, without `sorted()`
-6. **Cache** — stores fetched results locally so repeat lookups don't cost API calls
+5. **Rank** — scores each issue's approachability and sorts them
+6. **Cache** — stores fetched results locally for faster repeat lookups
 
 ---
 
 ## 🏗 Architecture
 ┌──────────────┐     ┌────────────────┐     ┌────────────────┐
 │  GitHub API   │───▶│  get_repos()     │───▶│  score_profile()  │
-│  (repos/search)│     │  (urllib)          │     │  + punch_list()    │
+│  (repos/search)│     │                    │     │  + punch_list()    │
 └──────────────┘     └────────────────┘     └────────────────┘
 │
 ▼
 ┌──────────────┐     ┌────────────────┐     ┌────────────────┐
 │  cache.json    │◀───│  find_issues()    │◀───│  approachability()│
-│  (local store)  │     │  (search API)       │     │  + my_sort()         │
+│  (local store)  │     │                     │     │  + my_sort()         │
 └──────────────┘     └────────────────┘     └────────────────┘
 
 ---
 
 ## ⚙️ Tech Stack
 
-- **Python 3** — standard library only (`urllib`, `json`, `os`, `datetime`)
-- **GitHub REST API** — repos and search endpoints
+- Python 3
+- GitHub REST API
 
 ---
 
@@ -84,7 +83,7 @@ It fetches your public repos from the GitHub API, scores your profile out of 100
 ### Prerequisites
 
 - Python 3.7+
-- A [GitHub Personal Access Token](https://github.com/settings/tokens) (no special scopes needed — just avoids the unauthenticated 60 requests/hour limit)
+- A [GitHub Personal Access Token](https://github.com/settings/tokens)
 
 ### Installation
 
@@ -98,8 +97,6 @@ cd gitgauge
 ```bash
 export GITHUB_TOKEN=your_token_here
 ```
-
-Never hardcode your token — it's read from the environment, and `.env` is gitignored.
 
 ---
 
@@ -120,17 +117,9 @@ Quit
 
 ---
 
-## ⚠️ Notes
-
-- Scores are a heuristic I designed, not a prediction — the breakdown shows exactly why
-- Caching has no expiry logic yet
-- Search endpoint has a tighter rate limit (~30/min) than the repos endpoint
-
----
-
 ## 🗺 What's Next
 
-Stage 2 adds pandas/numpy to compare a whole cohort of profiles at once, with percentile rankings and charts. Separate README for that.
+Stage 2 adds cohort comparisons across multiple profiles, with rankings and charts.
 
 ---
 
