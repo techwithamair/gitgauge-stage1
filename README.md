@@ -1,3 +1,4 @@
+# 🎯 GitGauge
 
 **GitHub Profile Auditor & Beginner Issue Finder**
 
@@ -63,10 +64,8 @@ flowchart TD
     A[GitHub API] --> B[get_repos]
     B --> C[score_profile]
     C --> D[punch_list]
-
     A --> E[find_issues]
     E --> F[approachability + my_sort]
-
     B --> G[(cache.json)]
     E --> G
 ```
@@ -90,8 +89,8 @@ flowchart TD
 ### Installation
 
 ```bash
-git clone https://github.com//gitgauge.git
-cd gitgauge
+git clone https://github.com/<your-username>/gitgauge-stage1.git
+cd gitgauge-stage1
 ```
 
 ### Configuration
@@ -107,26 +106,3 @@ export GITHUB_TOKEN=your_token_here
 ```bash
 python3 main.py
 ```
-GitGauge
-
-Audit a profile
-Find issues
-Quit
-
-
-- **Option 1** — enter a username, get a score out of 100 and a 3-item punch list
-- **Option 2** — enter a language, get the top 10 approachable open issues with links
-
----
-
-## 🗺 What's Next
-
-Stage 2 adds cohort comparisons across multiple profiles, with rankings and charts.
-
----
-
-<div align="center">
-
-**GitGauge** — *Audit. Improve. Contribute.*
-
-</div>
