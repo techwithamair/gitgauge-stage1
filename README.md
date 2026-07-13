@@ -80,3 +80,115 @@ approachable they look.
 ---
 
 ## 📂 Project Structure
+gitgauge/
+├── main.py              # CLI menu entry point
+├── repos.py              # get_repos()
+├── scoring.py            # score_profile(), punch_list()
+├── issues.py             # find_issues(), approachability(), my_sort()
+├── models.py             # Repo, User, Scorer classes (OOP refactor)
+├── cache.json             # local cache of fetched profiles (gitignored if sensitive)
+├── .env                   # GITHUB_TOKEN (gitignored, never committed)
+└── README.md
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Python 3.7+
+- A [GitHub Personal Access Token](https://github.com/settings/tokens) (no special scopes
+  needed for public data — just avoids the unauthenticated 60 requests/hour limit)
+
+### Installation
+
+```bash
+git clone https://github.com/<your-username>/gitgauge.git
+cd gitgauge
+```
+
+### Configuration
+
+Set your GitHub token as an environment variable — **never hardcode it**:
+
+```bash
+export GITHUB_TOKEN=your_token_here
+```
+
+Or place it in a `.env` file and ensure `.env` is listed in `.gitignore`.
+
+---
+
+## 💻 Usage
+
+```bash
+python3 main.py
+```
+GitGauge
+
+Audit a GitHub profile
+Find beginner-friendly issues
+Quit
+
+Choose an option:
+
+- **Option 1** — enter a username, get a score out of 100 and a 3-item punch list.
+- **Option 2** — enter a language, get the top 10 approachable open issues with links.
+
+---
+
+## 📐 Scoring Methodology
+
+Profiles are scored out of 100 across five weighted criteria:
+
+- Bio present
+- % of repos with a description
+- % of repos active in the last 6 months
+- Whether any repo has stars
+- Number of original (non-fork) repos
+
+Weights are defined in a single dict for easy tuning, and every score ships with a
+breakdown so the reasoning is transparent — this is a **heuristic**, not a prediction.
+
+---
+
+## 🎨 Design Decisions
+
+- **No third-party libraries in Stage 1** — forces explicit handling of headers, encoding,
+  and error cases that `requests` normally hides.
+- **Hand-written sort** — the issue-ranking sort is implemented manually (not `sorted()`)
+  to demonstrate understanding of the underlying mechanism; production code would use
+  Python's built-in Timsort via `sorted(key=...)`.
+- **Scores are heuristics, not AI** — GitGauge never claims to "predict" anything. All
+  scoring logic is transparent and explainable.
+
+---
+
+## ⚠️ Limitations
+
+- Relies on GitHub's public REST API and is subject to its rate limits.
+- Scoring weights reflect one opinionated view of a "strong" profile, not an objective
+  standard.
+- Caching is simple (no expiry logic yet) and intended for single-user, local use.
+
+---
+
+## 🗺 Roadmap
+
+- [ ] Cache expiry based on entry age
+- [ ] Additional scoring criteria (README quality, topics/tags)
+- [ ] Config file for custom weight tuning
+
+---
+
+## 📄 License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+<div align="center">
+
+**GitGauge** — *Audit. Improve. Contribute.*
+
+</div>
